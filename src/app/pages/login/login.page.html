@@ -1,10 +1,8 @@
-<ion-header> </ion-header>
-
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-card class="container">
     <ion-img src="assets/img/logo.png"></ion-img>
     <ion-card-header>
-      <ion-card-title>Iniciar Sesión</ion-card-title>
+      <ion-card-title class="ion-text-center">Iniciar Sesión</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -12,11 +10,12 @@
           <ion-input
             label="Nombre de usuario:"
             label-placement="floating"
-            formControlName="user"
+            formControlName="username"
+            required="true"
           ></ion-input>
           <ion-text
             color="danger"
-            *ngIf="controls.user.hasError('requiered') && controls.user.touched"
+            *ngIf="controls.username.hasError('requiered') && controls.username.touched"
           >
             El usuario es obligatorio!
           </ion-text>
@@ -27,6 +26,7 @@
             label="Contraseña:"
             type="password"
             formControlName="password"
+            required="true"
           ></ion-input>
           <ion-text
             color="danger"

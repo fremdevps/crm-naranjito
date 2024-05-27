@@ -1,4 +1,4 @@
-package ionic.crm;
+package ionic.crm.naranjito;
 
 import com.getcapacitor.BridgeActivity;
 

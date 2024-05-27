@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">crm</string>
-    <string name="title_activity_main">crm</string>
-    <string name="package_name">ionic.crm</string>
-    <string name="custom_url_scheme">ionic.crm</string>
+    <string name="app_name">Crm Naranjito</string>
+    <string name="title_activity_main">Crm Naranjito</string>
+    <string name="package_name">ionic.crm.naranjito</string>
+    <string name="custom_url_scheme">ionic.crm.naranjito</string>
 </resources>
