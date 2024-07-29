@@ -13,11 +13,11 @@
             formControlName="username"
             required="true"
           ></ion-input>
-          @if (controls.username.hasError('requiered') &&
-          controls.username.touched) {
-          <ion-text color="danger"> El usuario es obligatorio! </ion-text>
-          }
         </ion-item>
+        @if (controls.username.hasError('required') &&
+        controls.username.touched) {
+        <ion-text color="danger"> El usuario es obligatorio! </ion-text>
+        }
         <ion-item>
           <ion-input
             label-placement="floating"
@@ -26,11 +26,11 @@
             formControlName="password"
             required="true"
           ></ion-input>
-          @if (controls.password.hasError('requiered') &&
-          controls.password.touched) {
-          <ion-text color="danger"> La contraseña es obligatorio! </ion-text>
-          }
         </ion-item>
+        @if (controls.password.hasError('required') &&
+        controls.password.touched) {
+        <ion-text color="danger"> La contraseña es obligatorio! </ion-text>
+        }
         <ion-button
           class="ion-margin"
           expand="block"
