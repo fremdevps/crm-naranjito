@@ -13,12 +13,10 @@
             formControlName="username"
             required="true"
           ></ion-input>
-          <ion-text
-            color="danger"
-            *ngIf="controls.username.hasError('requiered') && controls.username.touched"
-          >
-            El usuario es obligatorio!
-          </ion-text>
+          @if (controls.username.hasError('requiered') &&
+          controls.username.touched) {
+          <ion-text color="danger"> El usuario es obligatorio! </ion-text>
+          }
         </ion-item>
         <ion-item>
           <ion-input
@@ -28,12 +26,10 @@
             formControlName="password"
             required="true"
           ></ion-input>
-          <ion-text
-            color="danger"
-            *ngIf="controls.password.hasError('requiered') && controls.password.touched"
-          >
-            La contraseña es obligatorio!
-          </ion-text>
+          @if (controls.password.hasError('requiered') &&
+          controls.password.touched) {
+          <ion-text color="danger"> La contraseña es obligatorio! </ion-text>
+          }
         </ion-item>
         <ion-button
           class="ion-margin"
