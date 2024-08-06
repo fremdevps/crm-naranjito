@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCard, IonImg, IonCardHeader, IonItem, IonCardContent, IonText, IonCardTitle, IonInput } from '@ionic/angular/standalone';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCard, IonImg
   imports: [IonInput, IonCardTitle, IonText, IonCardContent, IonItem, IonCardHeader, IonImg, IonCard, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
+  authService = inject(AuthService);
+
 
   loginForm = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
