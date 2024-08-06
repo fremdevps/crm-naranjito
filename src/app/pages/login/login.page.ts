@@ -15,14 +15,14 @@ import { AlertController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   authService = inject(AuthService);
   alertController = inject(AlertController);
-
+  fb = inject(FormBuilder);
 
   loginForm = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor() { }
 
 
   ngOnInit() {
@@ -36,7 +36,11 @@ export class LoginPage implements OnInit {
         console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        this.alertController.create({
+          header: 'Error',
+          message: err.error.message,
+          buttons: ['OK']
+        }).then(alert => alert.present());
       }
     })
   }
