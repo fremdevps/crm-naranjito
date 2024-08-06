@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCard, IonImg, IonCardHeader, IonItem, IonCardContent, IonText, IonCardTitle, IonInput } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { LoginParams } from 'src/models/auth.model';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPage implements OnInit {
   authService = inject(AuthService);
+  alertController = inject(AlertController);
 
 
   loginForm = this.fb.nonNullable.group({
@@ -28,7 +30,15 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+
+    this.authService.login(this.loginForm.value as LoginParams).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   get controls() {

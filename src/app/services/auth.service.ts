@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, from, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginParams } from 'src/models/auth.model';
-
+import { Preferences } from '@capacitor/preferences';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,14 +32,20 @@ export class AuthService {
   }
 
 
-  private setUser(user: any) {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
+  private async setUser(user: any) {
+    //use @capacitor/preferences to store the user token
+    await Preferences.set({ key: this.userKey, value: JSON.stringify(user) });
 
   }
   getUser(): Observable<any> {
-    const user = localStorage.getItem(this.userKey);
 
-    return of(user ? JSON.parse(user) : null);
+    return from(Preferences.get({ key: this.userKey })).pipe(
+      map((res) => res.value),
+      catchError((err) => {
+        throw err;
+      })
+    );
+
   }
 
 

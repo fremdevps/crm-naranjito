@@ -1,6 +1,6 @@
 
 //Login Parameters
 export interface LoginParams {
-  user: string;
+  username: string;
   password: string;
 }
