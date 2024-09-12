@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonCard, IonImg
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginParams } from 'src/models/auth.model';
 import { AlertController } from '@ionic/angular';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,7 +15,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   authService = inject(AuthService);
-  alertController = inject(AlertController);
+  notificationService = inject(NotificationService);
   fb = inject(FormBuilder);
 
   loginForm = this.fb.nonNullable.group({
@@ -29,20 +30,21 @@ export class LoginPage implements OnInit {
     null;
   }
 
-  onSubmit() {
-
+  async onSubmit() {
+    //add log in logic here
+    const loading = await this.notificationService.presentLoading();
+    console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value as LoginParams).subscribe({
       next: (res) => {
         console.log(res);
+        loading.dismiss();
       },
       error: (err) => {
-        this.alertController.create({
-          header: 'Error',
-          message: err.error.message,
-          buttons: ['OK']
-        }).then(alert => alert.present());
+
+        loading.dismiss();
+        this.notificationService.presentAlert('Error', 'Invalid credentials');
       }
-    })
+    });
   }
 
   get controls() {
