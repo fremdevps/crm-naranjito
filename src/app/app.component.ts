@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonCardContent, IonHeader, IonButton, IonCard, IonImg, IonCardHeader, IonCardTitle, IonInput, IonText } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { home, logIn } from 'ionicons/icons';
+import { home, logIn, people } from 'ionicons/icons';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -16,14 +16,14 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Login', url: '/login', icon: 'log-in' },
     { title: 'Socios', url: '/socios', icon: 'people' },
+    { title: 'Login', url: '/login', icon: 'log-in' },
   ];
   public labels = [];
   public userName = '';
   authService = inject(AuthService);
   constructor() {
-    addIcons({ home, logIn });
+    addIcons({ home, logIn, people });
     this.authService.getUserName().subscribe((name) => {
       this.userName = name || '';
     }
