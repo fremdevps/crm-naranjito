@@ -22,7 +22,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/auth/login`, data).pipe(
       //Set the token in the local storage
       tap((res: any) => {
-        this.setUser(res.user);
+        this.setUser(res);
       }),
       catchError((err) => {
         throw err;

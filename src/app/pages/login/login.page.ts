@@ -14,8 +14,8 @@ import { NotificationService } from 'src/app/services/notification.service';
   imports: [IonInput, IonCardTitle, IonText, IonCardContent, IonItem, IonCardHeader, IonImg, IonCard, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-  authService = inject(AuthService);
-  notificationService = inject(NotificationService);
+  /*authService = inject(AuthService);
+  notificationService = inject(NotificationService);*/
   fb = inject(FormBuilder);
 
   loginForm = this.fb.nonNullable.group({
@@ -23,7 +23,9 @@ export class LoginPage implements OnInit {
     password: ['', [Validators.required]],
   });
 
-  constructor() { }
+  constructor(private authService: AuthService, private notificationService: NotificationService,
+    private alertCtrl: AlertController
+  ) { }
 
 
   ngOnInit() {
@@ -32,16 +34,21 @@ export class LoginPage implements OnInit {
 
   async onSubmit() {
     //add log in logic here
-    const loading = await this.notificationService.presentLoading();
+    //const loading = await this.notificationService.presentLoading();
     console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value as LoginParams).subscribe({
       next: (res) => {
         console.log(res);
-        loading.dismiss();
+        this.alertCtrl.create({
+          header: 'Success',
+          message: 'You have successfully logged in',
+          buttons: ['OK']
+        }).then((alert) => {
+          alert.present();
+        });
       },
       error: (err) => {
 
-        loading.dismiss();
         this.notificationService.presentAlert('Error', 'Invalid credentials');
       }
     });
