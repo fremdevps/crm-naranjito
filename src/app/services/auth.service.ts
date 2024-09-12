@@ -62,4 +62,10 @@ export class AuthService {
     );
   }
 
+  getUserName(): Observable<string | undefined> {
+    return this.getUser().pipe(
+      map((res) => res?.items[0].clogiusuar)
+    );
+  }
+
 }
