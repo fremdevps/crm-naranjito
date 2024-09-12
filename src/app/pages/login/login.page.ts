@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoginParams } from 'src/models/auth.model';
 import { AlertController } from '@ionic/angular';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,18 +15,17 @@ import { NotificationService } from 'src/app/services/notification.service';
   imports: [IonInput, IonCardTitle, IonText, IonCardContent, IonItem, IonCardHeader, IonImg, IonCard, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-  /*authService = inject(AuthService);
-  notificationService = inject(NotificationService);*/
+  authService = inject(AuthService);
+  notificationService = inject(NotificationService);
   fb = inject(FormBuilder);
+  router = inject(Router);
 
   loginForm = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
-  constructor(private authService: AuthService, private notificationService: NotificationService,
-    private alertCtrl: AlertController
-  ) { }
+  constructor() { }
 
 
   ngOnInit() {
@@ -34,22 +34,18 @@ export class LoginPage implements OnInit {
 
   async onSubmit() {
     //add log in logic here
-    //const loading = await this.notificationService.presentLoading();
+    const loading = await this.notificationService.presentLoading('Iniciano sesión...');
     console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value as LoginParams).subscribe({
       next: (res) => {
         console.log(res);
-        this.alertCtrl.create({
-          header: 'Success',
-          message: 'You have successfully logged in',
-          buttons: ['OK']
-        }).then((alert) => {
-          alert.present();
-        });
+        loading.dismiss();
+        this.router.navigate(['/home']);
       },
       error: (err) => {
-
-        this.notificationService.presentAlert('Error', 'Invalid credentials');
+        console.log(err);
+        loading.dismiss();
+        this.notificationService.presentAlert('Error', err.error.error_message);
       }
     });
   }
